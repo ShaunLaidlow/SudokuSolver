@@ -1,13 +1,13 @@
 board = [
-    [7,8,0,4,0,0,1,2,0],
-    [6,0,0,0,7,5,0,0,9],
-    [0,0,0,6,0,1,0,7,8],
-    [0,0,7,0,4,0,2,6,0],
-    [0,0,1,0,5,0,9,3,0],
-    [9,0,4,0,6,0,0,0,5],
-    [0,7,0,3,0,0,0,1,2],
-    [1,2,0,0,0,7,4,0,0],
-    [0,4,9,2,0,6,0,0,7]
+    [0,0,0,9,8,0,6,1,0],
+    [4,0,0,0,6,0,0,0,0],
+    [0,0,9,5,0,0,0,2,7],
+    [0,0,0,2,0,0,7,0,0],
+    [5,4,0,0,0,0,0,8,6],
+    [0,7,6,0,5,0,0,0,0],
+    [0,6,1,0,9,5,8,3,2],
+    [2,9,4,0,3,7,5,6,0],
+    [8,0,0,0,2,1,0,0,0]
 ]
 
 #Prints stylized sudoku grid
@@ -34,6 +34,32 @@ def find_zero(board):
             if board[i][j] == 0:
                 return (i,j) #row, col
     return None
+
+#Validate Number Doesn't Conflict with Current Grid
+def validate_number(board,test_num,test_position):
+    #Check if number exists in the row
+    for j in range(len(board[0])):
+        if test_num == board[test_position[0]][j] and test_position[1] != j:
+            return False
+
+    #Check if number exists in the col
+    for i in range(len(board)):
+        if test_num == board[i][test_position[1]] and test_position[0] != i:
+            return False
+
+    #Check if number exists in the grid square
+    x_box = test_position[1] // 3
+    y_box = test_position[0] // 3
+    
+    for j in range(x_box * 3, x_box * 3 + 3):
+        for i in range(y_box * 3, y_box * 3 + 3):
+            if board[i][j] == test_num and test_position[0] != i and test_position[1] != j:
+                return False
+                
+    #Return True if all conditions are satisfied            
+    return True
+
+    
 
 
 
